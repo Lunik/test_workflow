@@ -1,0 +1,39 @@
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ansible:
+          - 5.2.0
+          - 4.10.0
+          - 3.4.0
+          - 2.10.7
+        python:
+          - 3.10.2
+          - 3.9.10
+          - 3.8.12
+        os:
+          - bullseye
+          - slim-bullseye
+          - buster
+          - slim-buster
+          - stretch
+          - slim-stretch
+          - alpine3.15
+          - alpine3.14
+          - alpine3.13
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo ${{ matrix.ansible }} ${{ matrix.python }} ${{ matrix.os }} 
